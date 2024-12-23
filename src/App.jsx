@@ -18,22 +18,21 @@ function calculateWinner(squares) {
       return squares[a] 
     }
   }
-  return null
-   
+  return 
 }
 
-export default function Board() {
+  export default function Board() {
   const [squares, setSquares] = useState(Array(9).fill(""))
   const [XisNext, setXisNext] = useState(true)
   const nextPlayer = calculateWinner(squares)
   let status;
   let winner
   if (nextPlayer){
-    status = `Winner is ${nextPlayer}`
-  }else{
-    winner = `Next Player is ${XisNext ? "X" : "O"}`
+    winner = `Winner is ${nextPlayer}`
+  }else {
+    status = `Next Player is ${XisNext ? "X" : "O"}`
   }
-
+  
   function click(i) { 
     if (squares[i] || calculateWinner(squares)){
       return
@@ -47,6 +46,15 @@ export default function Board() {
     setSquares(nextSquare)
     setXisNext(!XisNext)
   }
+
+  let data
+  const draws = [...squares]
+  const draw = draws.every(space=> space != "")
+  if (draw && !nextPlayer){
+     data = "This is a draw"
+     status = " "
+  }
+  
   
   return (
     <div className='container'>
@@ -69,7 +77,7 @@ export default function Board() {
 
       </div>
       <button onClick={()=>setSquares(Array(9).fill(""))} className='reset'>RESET</button>
-      <p>{winner}</p>
+      <p>{winner}{data}</p>
     </div>
   )
 }
