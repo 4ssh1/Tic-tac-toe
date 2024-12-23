@@ -3,7 +3,7 @@ import './App.css'
 
 function Square({value, squareClick}) {
   return (
-    <button className="square" onClick={squareClick}>
+    <button className="square" onClick={squareClick} >
       {value}
     </button>
   )
@@ -15,7 +15,7 @@ function calculateWinner(squares) {
   for (let i = 0; i < wins.length; i++) {
     const [a, b, c] = wins[i];
     if(squares[a]&& squares[a]=== squares[b]&& squares[a]===squares[c]){
-      return squares[a]
+      return squares[a] 
     }
   }
   return null
@@ -24,13 +24,17 @@ function calculateWinner(squares) {
 
 export default function Board() {
   const [squares, setSquares] = useState(Array(9).fill(""))
-
-const [XisNext, setXisNext] = useState(true)
+  const [XisNext, setXisNext] = useState(true)
+  const nextPlayer = calculateWinner(squares)
+  let status;
+  let winner
+  if (nextPlayer){
+    status = `Winner is ${nextPlayer}`
+  }else{
+    winner = `Next Player is ${XisNext ? "X" : "O"}`
+  }
 
   function click(i) { 
-    // const sqrArr = squares.slice()
-    // sqrArr[i]= "X"
-    // setSquares(sqrArr)
     if (squares[i] || calculateWinner(squares)){
       return
     } 
@@ -45,7 +49,8 @@ const [XisNext, setXisNext] = useState(true)
   }
   
   return (
-    <>
+    <div className='container'>
+      <div>{status}</div>
       <div className="board-row">
         {
           squares.slice(0,3).map((e,i) => <Square value={e} squareClick={() => click(i)} key={i} />)
@@ -63,6 +68,8 @@ const [XisNext, setXisNext] = useState(true)
         }
 
       </div>
-    </>
+      <button onClick={()=>setSquares(Array(9).fill(""))} className='reset'>RESET</button>
+      <p>{winner}</p>
+    </div>
   )
 }
