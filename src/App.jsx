@@ -24,6 +24,9 @@ function calculateWinner(squares) {
   export default function Board() {
   const [squares, setSquares] = useState(Array(9).fill(""))
   const [XisNext, setXisNext] = useState(true)
+  const [history, setHistory] = useState([Array(9).fill("")])
+  const [position, setPosition] = useState(0)
+
   const nextPlayer = calculateWinner(squares)
   let status;
   let winner
@@ -33,6 +36,7 @@ function calculateWinner(squares) {
     status = `Next Player is ${XisNext ? "X" : "O"}`
   }
   
+
   function click(i) { 
     if (squares[i] || calculateWinner(squares)){
       return
@@ -43,8 +47,13 @@ function calculateWinner(squares) {
     }else{
       nextSquare[i]= "O"
     }
+
+    const newHistory = history.slice(0, position + 1)
+    setHistory([...newHistory, nextSquare])
+    setPosition(newHistory.length)
     setSquares(nextSquare)
     setXisNext(!XisNext)
+
   }
 
   let data
@@ -54,8 +63,34 @@ function calculateWinner(squares) {
      data = "This is a draw"
      status = " "
   }
-  
-  
+
+  function undo(){
+    if (position > 0){
+      setSquares(history[position - 1])
+      setPosition(position - 1)
+      let pre = position - 1
+      setXisNext(pre % 2 === 0)
+    }else{
+      alert("No moves to undo")
+    }
+  }
+
+  function redo(){
+    if (position < history.length - 1){
+      setSquares(history[position + 1])
+      setPosition(position + 1)
+      let newMove = position + 1
+      setXisNext(newMove % 2 === 0)
+    }else{
+      alert("Where are you going to ? :)")
+    }
+  }
+
+  function reset(){
+    setSquares(Array(9).fill(""))
+    setXisNext(true)
+  }
+
   return (
     <div className='container'>
       <div>{status}</div>
@@ -76,8 +111,10 @@ function calculateWinner(squares) {
         }
 
       </div>
-      <button onClick={()=>setSquares(Array(9).fill(""))} className='reset'>RESET</button>
+      <button onClick={reset} className='reset'>RESET</button>
       <p>{winner}{data}</p>
+      <button onClick={undo}>UNDO</button>
+      <button onClick={redo}>REDO</button>
     </div>
   )
 }
