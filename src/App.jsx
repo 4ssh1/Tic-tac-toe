@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 
-function Square({value, squareClick}) {
+function Square({value, squareClick, green}) {
   return (
-    <button className="square" onClick={squareClick} >
+    <button className= {`square ${green ? "green" : ""}`} onClick={squareClick} >
       {value}
     </button>
   )
@@ -15,10 +15,10 @@ function calculateWinner(squares) {
   for (let i = 0; i < wins.length; i++) {
     const [a, b, c] = wins[i];
     if(squares[a]&& squares[a]=== squares[b]&& squares[a]===squares[c]){
-      return squares[a] 
+      return {winner:squares[a], winningCombo: wins[i]}  
     }
   }
-  return 
+  return {winner: null, winningCombo: []}
 }
 
   export default function Board() {
@@ -26,19 +26,26 @@ function calculateWinner(squares) {
   const [XisNext, setXisNext] = useState(true)
   const [history, setHistory] = useState([Array(9).fill("")])
   const [position, setPosition] = useState(0)
+  const [winnerSquares, setWinnerSquares] = useState([])
 
-  const nextPlayer = calculateWinner(squares)
+  useEffect(()=>{
+    if(winner){
+      setWinnerSquares(winningCombo)
+    }else{setWinnerSquares([])}
+  },[squares])
+
+  const {winner, winningCombo} = calculateWinner(squares)
   let status;
-  let winner
-  if (nextPlayer){
-    winner = `Winner is ${nextPlayer}`
+  let winnerSqr
+  if (winner){
+    winnerSqr = `Winner is ${winner}`
   }else {
     status = `Next Player is ${XisNext ? "X" : "O"}`
   }
   
 
   function click(i) { 
-    if (squares[i] || calculateWinner(squares)){
+    if (squares[i] || winner){
       return
     } 
     const nextSquare = squares.slice()
@@ -89,6 +96,7 @@ function calculateWinner(squares) {
   function reset(){
     setSquares(Array(9).fill(""))
     setXisNext(true)
+    setPosition(0)
   }
 
   return (
@@ -96,24 +104,25 @@ function calculateWinner(squares) {
       <div>{status}</div>
       <div className="board-row">
         {
-          squares.slice(0,3).map((e,i) => <Square value={e} squareClick={() => click(i)} key={i} />)
+          squares.slice(0,3).map((e,i) => <Square value={e} squareClick={() => click(i)} key={i} 
+          green={winnerSquares.includes(i)}/>)
         }
       </div>
       <div className="board-row">
         {
-          squares.slice(3,6).map((e,i) => <Square value={e} squareClick={() => click(i+3)} key={i} />)
+          squares.slice(3,6).map((e,i) => <Square value={e} squareClick={() => click(i+3)} key={i} green={winnerSquares.includes(i+3)}/>)
         }
         
       </div>
       <div className="board-row">
         {
-          squares.slice(6,9).map((e,i) => <Square value={e} squareClick={() => click(i+6)} key={i} />)
+          squares.slice(6,9).map((e,i) => <Square value={e} squareClick={() => click(i+6)} key={i} green={winnerSquares.includes(i+6)}/>)
         }
 
       </div>
       <button onClick={reset} className='reset'>RESET</button>
-      <p>{winner}{data}</p>
-      <button onClick={undo}>UNDO</button>
+      <p>{winnerSqr}{data}</p>
+      <button onClick={undo} style={{marginRight:"10px"}}>UNDO</button>
       <button onClick={redo}>REDO</button>
     </div>
   )

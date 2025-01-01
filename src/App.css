@@ -6,6 +6,11 @@ body {
   font-family: sans-serif;
 }
 
+.square.green{
+  background-color:rgb(68, 219, 68) ;
+  color: white;
+}
+
 .square {
   background: #fff;
   border: 1px solid #999;
