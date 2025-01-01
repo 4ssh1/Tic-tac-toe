@@ -1,8 +1,25 @@
-# React + Vite
+# __A Tic-tac-toe game__
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+A fun and interactive Tic-Tac-Toe game with additional features like undo, redo and reset functionality, making it more engaging and user-friendly.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# __Features__
+
+- __Undo/Redo__ : Revisit previous moves or redo undone moves seamlessly. 
+
+- __Reset Game__ : Start a fresh game anytime with the reset button.
+
+- __Winning Highlights__ : Hightlights the winning squares in green for clear visualization.
+
+  # How to Play
+
+  1.  Players take turns marking a square with "X" or "O"
+  2.  The first player to get three in a row (horizontally, vertically or diagonally) wins.
+  3.  Use the __undo__ and __redo__ buttons to revisit moves.
+  4.  Click __reset__ to start a new game.
+ 
+  # License
+
+  This project is licensed under the MIT license.
+ 
+  
