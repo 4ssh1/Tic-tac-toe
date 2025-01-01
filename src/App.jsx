@@ -66,7 +66,7 @@ function calculateWinner(squares) {
   let data
   const draws = [...squares]
   const draw = draws.every(space=> space != "")
-  if (draw && !nextPlayer){
+  if (draw && !winner){
      data = "This is a draw"
      status = " "
   }
