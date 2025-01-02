@@ -11,6 +11,9 @@ A fun and interactive Tic-Tac-Toe game with additional features like undo, redo 
 
 - __Winning Highlights__ : Hightlights the winning squares in green for clear visualization.
 
+  # Technologies Used
+  - __React__
+
   # How to Play
 
   1.  Players take turns marking a square with "X" or "O"
