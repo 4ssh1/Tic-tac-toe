@@ -95,6 +95,7 @@ function calculateWinner(squares) {
 
   function reset(){
     setSquares(Array(9).fill(""))
+    setHistory([Array(9).fill("")])
     setXisNext(true)
     setPosition(0)
   }
