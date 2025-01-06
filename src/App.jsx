@@ -123,8 +123,10 @@ function calculateWinner(squares) {
       </div>
       <button onClick={reset} className='reset'>RESET</button>
       <p>{winnerSqr}{data}</p>
-      <button onClick={undo} style={{marginRight:"10px"}}>UNDO</button>
-      <button onClick={redo}>REDO</button>
+      <div className='buttons'>
+        <button onClick={undo} style={{marginRight:"10px"}}>UNDO</button>
+        <button onClick={redo}>REDO</button>
+      </div>
     </div>
   )
 }
